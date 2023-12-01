@@ -6,8 +6,12 @@
   "tasks": {
     "Start": {
       "name": "Start",
-      "command": "bun run http.ts",
+      "command": "bun --hot run http.ts",
       "runAtStart": true
+    },
+    "bun src/01/index.ts": {
+      "name": "Run day 01",
+      "command": "bun src/01/index.ts"
     }
   }
 }
