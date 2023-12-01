@@ -1,1 +1,1 @@
-console.log("Hello via Bun!");
+console.info(`I'm running Bun ${Bun.version}`);
