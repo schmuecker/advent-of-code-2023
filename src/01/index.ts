@@ -4,8 +4,7 @@ async function readFile(path: string): Promise<string> {
 }
 
 function getLines(input: string): string[] {
-  const lines = input.split("\n");
-  return lines;
+  return input.split("\n");
 }
 
 function getNumbersInString(input: string): number[] {
@@ -14,8 +13,7 @@ function getNumbersInString(input: string): number[] {
     console.error("No number found in string", input);
     return [];
   }
-  const numbers = matches.map((match) => Number(match));
-  return numbers;
+  return matches.map((match) => Number(match));
 }
 
 function getFirstAndLastDigit(numbers: number[]): number {
@@ -27,12 +25,8 @@ function getFirstAndLastDigit(numbers: number[]): number {
   return Number(`${first}${last}`);
 }
 
-function sum(numbers: number[]) {
-  let sum = 0;
-  numbers.forEach((number) => {
-    sum += number;
-  });
-  return sum;
+function sum(numbers: number[]): number {
+  return numbers.reduce((acc, curr) => acc + curr, 0);
 }
 
 async function main() {
