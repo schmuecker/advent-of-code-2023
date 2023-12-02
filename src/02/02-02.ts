@@ -51,26 +51,6 @@ function parseGame(line: string): Game {
   return game;
 }
 
-function isRoundValid(round: Round): boolean {
-  if (round.red == undefined) round.red = 0;
-  if (round.green == undefined) round.green = 0;
-  if (round.blue == undefined) round.blue = 0;
-  const isRedValid = round.red <= cubeLimits.red;
-  const isGreenValid = round.green <= cubeLimits.green;
-  const isBlueValid = round.blue <= cubeLimits.blue;
-  return isRedValid && isGreenValid && isBlueValid;
-}
-
-function isGameValid(game: Game): boolean {
-  let isValid = true;
-  game.rounds.forEach((round) => {
-    if (!isRoundValid(round)) {
-      isValid = false;
-    }
-  });
-  return isValid;
-}
-
 function getMinimumCubes(game: Game): Cubes {
   let red = 0;
   let green = 0;
@@ -101,7 +81,6 @@ async function main() {
   console.log("Day 02 - Challenge 1");
   const fileContent = await readFile("./src/02/input.txt");
   const lines = getLines(fileContent);
-  const validGameIds: number[] = [];
   const powers = lines.map((line) => {
     const game = parseGame(line);
     const minimumCubes = getMinimumCubes(game);
