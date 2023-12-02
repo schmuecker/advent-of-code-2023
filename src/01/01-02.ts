@@ -9,15 +9,15 @@ function getLines(input: string): string[] {
 
 function convertNumberStringToDigit(word: string): string {
   let newString = `${word}`;
-  newString = newString.replaceAll("one", "1");
   newString = newString.replaceAll("two", "2");
+  newString = newString.replaceAll("one", "1");
   newString = newString.replaceAll("three", "3");
   newString = newString.replaceAll("four", "4");
   newString = newString.replaceAll("five", "5");
   newString = newString.replaceAll("six", "6");
   newString = newString.replaceAll("seven", "7");
-  newString = newString.replaceAll("eight", "8");
   newString = newString.replaceAll("nine", "9");
+  newString = newString.replaceAll("eight", "8");
   return newString;
 }
 
@@ -50,11 +50,17 @@ async function main() {
   const convertedLines = lines.map((line) => {
     return convertNumberStringToDigit(line);
   });
-  const numbers = convertedLines.map((line) => {
+  const numbers = convertedLines.map((line, index) => {
     const digits = getNumbersInString(line);
-    console.log({ line, digits, firstLast: getFirstAndLastDigit(digits) });
+    console.log({
+      line,
+      originalLine: lines[index],
+      digits,
+      firstLast: getFirstAndLastDigit(digits),
+    });
     return getFirstAndLastDigit(digits);
   });
+  console.log("We got", numbers.length, "numbers");
   const result = sum(numbers);
   console.log("Day 01 Challenge 2 Result:", result);
 }
