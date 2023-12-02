@@ -16,6 +16,12 @@ type Round = {
   valid: boolean;
 };
 
+type Cubes = {
+  red: number;
+  blue: number;
+  green: number;
+};
+
 type Game = {
   id: number;
   rounds: Round[];
@@ -65,6 +71,28 @@ function isGameValid(game: Game): boolean {
   return isValid;
 }
 
+function getMinimumCubes(game: Game): Cubes {
+  let red = 0;
+  let green = 0;
+  let blue = 0;
+  game.rounds.forEach((round) => {
+    if (round.red > red) {
+      red = round.red;
+    }
+    if (round.green > green) {
+      green = round.green;
+    }
+    if (round.blue > blue) {
+      blue = round.blue;
+    }
+  });
+  return { red, green, blue };
+}
+
+function getPowerOfCubes(cubes: Cubes) {
+  return cubes.red * cubes.green * cubes.blue;
+}
+
 function sum(numbers: number[]): number {
   return numbers.reduce((acc, curr) => acc + curr, 0);
 }
@@ -74,14 +102,14 @@ async function main() {
   const fileContent = await readFile("./src/02/input.txt");
   const lines = getLines(fileContent);
   const validGameIds: number[] = [];
-  lines.forEach((line) => {
+  const powers = lines.map((line) => {
     const game = parseGame(line);
-    if (isGameValid(game)) {
-      validGameIds.push(game.id);
-    }
+    const minimumCubes = getMinimumCubes(game);
+    const power = getPowerOfCubes(minimumCubes);
+    return power;
   });
-  const idSum = sum(validGameIds);
-  console.log("Result of Day 02 Challenge 1:", idSum);
+  const result = sum(powers);
+  console.log("Result of Day 02 Challenge 1:", result);
 }
 
 main();
