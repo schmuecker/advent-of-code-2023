@@ -1,3 +1,5 @@
+const cubeLimits = {};
+
 async function readFile(path: string): Promise<string> {
   const file = await Bun.file(path);
   return file.text();
