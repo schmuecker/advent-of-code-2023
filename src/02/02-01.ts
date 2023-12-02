@@ -1,4 +1,4 @@
-const cubeLimits = {};
+const cubeLimits = { red: 12, green: 13, blue: 14 } as const;
 
 async function readFile(path: string): Promise<string> {
   const file = await Bun.file(path);
@@ -21,11 +21,46 @@ type Game = {
   rounds: Round[];
 };
 
-function parseGame(line: string): Game {}
+function parseGame(line: string): Game {
+  const a = line.split(":");
+  const b = a[0].split(" ");
+  const id = Number(b[1]);
 
-function isRoundValid(round: Round): boolean {}
+  const c = a[1].split(";");
 
-function isGameValid(game: Game): boolean {}
+  const game = { id: id, rounds: [] };
+
+  for (var i = 0; i < c.length; i++) {
+    const d = c[i].split(",");
+
+    const round: Round | {} = {};
+
+    for (var j = 0; j < d.length; j++) {
+      const e = d[j].split(" ");
+      round[e[2]] = Number(e[1]);
+    }
+    game.rounds.push(round);
+  }
+
+  return game;
+}
+
+function isRoundValid(round: Round): boolean {
+  const isRedValid = round.red <= cubeLimits.red;
+  const isGreenValid = round.green <= cubeLimits.green;
+  const isBlueValid = round.blue <= cubeLimits.blue;
+  return isRedValid && isGreenValid && isBlueValid;
+}
+
+function isGameValid(game: Game): boolean {
+  let isValid = true;
+  game.rounds.forEach((round) => {
+    if (!isRoundValid(round)) {
+      isValid = false;
+    }
+  });
+  return isValid;
+}
 
 function sum(numbers: number[]): number {
   return numbers.reduce((acc, curr) => acc + curr, 0);
@@ -35,12 +70,16 @@ async function main() {
   console.log("Day 02 - Challenge 1");
   const fileContent = await readFile("./src/02/input.txt");
   const lines = getLines(fileContent);
-  const validGames = [];
-  // Mappe über lines
-  //   Pro Line, schau ob alle Rounds des Games valid sind
-  //   Sammle IDs von valid games
-  // Sum der valid game ids
-  console.log(lines);
+  const validGameIds: number[] = [];
+  lines.forEach((line) => {
+    const game = parseGame(line);
+    if (isGameValid(game)) {
+      validGameIds.push(game.id);
+    }
+  });
+  const idSum = sum(validGameIds);
+  console.log(validGameIds);
+  console.log("Result of Day 02 Challenge 1:", idSum);
 }
 
 main();
