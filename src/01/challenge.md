@@ -25,12 +25,6 @@ Your puzzle answer was 54388.
 
 The first half of this puzzle is complete! It provides one gold star: *
 
-twone
-oneight
-threeight
-five eight
-nine eight
-
 --- Part Two ---
 Your calculation isn't quite right. It looks like some of the digits are actually spelled out with letters: one, two, three, four, five, six, seven, eight, and nine also count as valid "digits".
 
