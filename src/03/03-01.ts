@@ -101,7 +101,6 @@ function iterateMatrix(matrix: Matrix) {
       }
     }
   }
-  console.log(validNumbers);
   return validNumbers;
 }
 
@@ -115,6 +114,8 @@ async function main() {
   const lines = getLines(fileContent);
   const matrix = getMatrix(lines);
   const validNumbers = iterateMatrix(matrix);
+  console.log("Number of valid part numbers:", validNumbers.length);
+  console.log(validNumbers);
   const result = sum(validNumbers);
   console.log("Result", result);
 }
