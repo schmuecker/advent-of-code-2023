@@ -69,7 +69,7 @@ function iterateMatrix(matrix: Matrix) {
   let currentNumber: string = "";
   // Zeilen entlang gehen (2 for loops)
   for (let rowIdx = 0; rowIdx < matrix.length; rowIdx++) {
-    for (let columnIdx = 0; columnIdx < matrix.length; columnIdx++) {
+    for (let columnIdx = 0; columnIdx < matrix[0].length; columnIdx++) {
       const currentCell = matrix[rowIdx][columnIdx];
       // if punkt:
       if (currentCell === ".") {
@@ -90,8 +90,17 @@ function iterateMatrix(matrix: Matrix) {
           currentNumber = "";
         }
       } else if (!isNaN(Number(currentCell))) {
-        // if zahl: speicher in zwischenspeicher und geh weiter
         currentNumber = `${currentNumber}${currentCell}`;
+        if (columnIdx === matrix[rowIdx].length - 1) {
+          for (let i = columnIdx - currentNumber.length; i < columnIdx; i++) {
+            const hasValidOutline = checkOutline(matrix, [rowIdx, i]);
+            if (hasValidOutline) {
+              validNumbers.push(Number(currentNumber));
+              i = columnIdx;
+            }
+          }
+          currentNumber = "";
+        }
       } else if (currentNumber) {
         // if sonderzeichen:
         //-> if zwischenspeicher leer: geh weiter
@@ -114,8 +123,6 @@ async function main() {
   const lines = getLines(fileContent);
   const matrix = getMatrix(lines);
   const validNumbers = iterateMatrix(matrix);
-  console.log("Number of valid part numbers:", validNumbers.length);
-  console.log(validNumbers);
   const result = sum(validNumbers);
   console.log("Result", result);
 }
