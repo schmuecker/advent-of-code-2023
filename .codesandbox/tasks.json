@@ -24,6 +24,10 @@
     "Run day 02 Challenge 02": {
       "name": "Run day 02-02",
       "command": "bun src/02/02-02.ts"
+    },
+    "Run day 03 Challenge 01": {
+      "name": "Run day 03-01",
+      "command": "bun src/03/03-01.ts"
     }
   }
 }
